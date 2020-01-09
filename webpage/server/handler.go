@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -75,7 +76,7 @@ func (c *TmplCache) ExecuteCachedTemplate(name string, data interface{}) error {
 	if !ok {
 		return fmt.Errorf("error template %s not found in cache\n", name)
 	}
-	var buf bytes.Buffer
+	var buf = new(bytes.Buffer)
 
 	err := t.Execute(buf, data)
 	if err != nil {
@@ -83,4 +84,15 @@ func (c *TmplCache) ExecuteCachedTemplate(name string, data interface{}) error {
 	}
 	c.Static[t.Name()] = buf.Bytes()
 	return nil
+}
+
+func (c *TmplCache) SaveCachedTplAsFile(tplName string, savepath string) error {
+	b, ok := c.Static[tplName]
+	if !ok {
+		if _, ok := c.Tmpl[tplName]; ok {
+			return fmt.Errorf("%s found but must be exec before saving as file; call (*TmplCache).ExecuteCachedTemplate(%s) then try again", tplName, tplName)
+		}
+		return fmt.Errorf("template %s not found in cache", tplName)
+	}
+	return ioutil.WriteFile(savepath, b, 0600)
 }
