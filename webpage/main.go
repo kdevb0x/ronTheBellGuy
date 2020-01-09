@@ -5,7 +5,17 @@
 package main
 
 import (
-	"./server"
+	"log"
+
+	"github.com/kdevb0x/ronTheBellGuy/webpage/server"
 )
 
-var nothing = server.Imp()
+const static = "assets/"
+
+func main() {
+	s, err := server.NewTemplateServer()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+}
