@@ -29,7 +29,7 @@ type TemplateServer struct {
 }
 
 func NewTemplateServer() *TemplateServer {
-	return &TemplateServer{Mux: mux.NewRouter()}
+	return &TemplateServer{Mux: mux.NewRouter(), Cache: NewTmplCache()}
 }
 
 func (s *TemplateServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {

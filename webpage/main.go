@@ -6,6 +6,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/kdevb0x/ronTheBellGuy/webpage/server"
 )
@@ -13,9 +14,7 @@ import (
 const static = "assets/"
 
 func main() {
-	s, err := server.NewTemplateServer()
-	if err != nil {
-		log.Fatal(err)
-	}
+	s := server.NewTemplateServer()
+	log.Printf("started %s\n", time.Now())
 
 }
