@@ -13,8 +13,12 @@ import (
 
 const static = "assets/"
 
-func main() {
+func initialize() {
 	s := server.NewTemplateServer()
 	log.Printf("started %s\n", time.Now())
+
+}
+
+func main() {
 
 }

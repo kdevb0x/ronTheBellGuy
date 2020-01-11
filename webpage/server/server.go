@@ -4,8 +4,11 @@
 
 package server
 
-type Nothing interface{}
+import (
+	"net"
+	"net/http"
+)
 
-func Imp() Nothing {
-	return nil
-}
+var _ net.Listener
+
+var _ http.FileSystem
