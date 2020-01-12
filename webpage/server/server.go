@@ -9,6 +9,22 @@ import (
 	"net/http"
 )
 
+type Server struct {
+	http.Server
+	T TemplateServer
+}
+
+func NewServer(addr string) *Server {
+	s := new(Server)
+	s.Addr = addr
+	s.T = *NewTemplateServer()
+	s.Handler = s.T.Mux
+
+	// TODO: set timeouts
+
+	return s
+}
+
 var _ net.Listener
 
 var _ http.FileSystem
